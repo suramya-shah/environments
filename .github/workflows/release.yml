@@ -49,5 +49,5 @@ jobs:
       with:
         file: ${{ matrix.run }}
         context: ${{env.path}}
-        tags: 263601/${{env.version}}
+        tags: 263601/${{env.version}},263601/${{env.dockerRepo}}:latest
         push: true
