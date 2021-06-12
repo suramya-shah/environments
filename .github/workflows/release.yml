@@ -41,8 +41,6 @@ jobs:
               - 'php7/version'
             ruby/Dockerfile-2.7:
               - 'ruby/version'
-            
-
   run-docker-build-push-action:
     needs: check
     strategy:
