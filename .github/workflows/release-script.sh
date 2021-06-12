@@ -6,7 +6,7 @@
     cat $pwd/dockerfile ; echo "path=";
     cat $pwd/path; path=$(cat $pwd/path); 
     if [[ $(cat $pwd/dockerfile) == 'Dockerfile' ]]; then version=$(cat $path/version); else ver=-$(cat $pwd/ver) && cd $path && version=$(cat version$ver); fi; 
-    echo $version | cut -d '/' -f1>>$pwd/dockerRepo;
+    echo $version | cut -d ':' -f1>>$pwd/dockerRepo;
     dockerRepo=$(cat $pwd/dockerRepo);
     echo "version=$version" >> $GITHUB_ENV ;   
     echo "path=$path" >> $GITHUB_ENV ;
