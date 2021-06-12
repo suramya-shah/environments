@@ -1,7 +1,8 @@
-    pwd=`pwd`;echo ${{ matrix.run }}>>$pwd/folder; 
-    cat $pwd/folder | cut -d '/' -f1>>$pwd/path ;
+    pwd=`pwd`;echo ${{ matrix.run }}>>$pwd/folder;
+    s=$(cat $pwd/folder); 
+    echo "${s%/*}">>$pwd/path ;
     cat $pwd/folder | cut -d '-' -f2>>$pwd/ver ; 
-    s=$(cat $pwd/folder); echo "${s##*/}">>$pwd/dockerfile;
+    echo "${s##*/}">>$pwd/dockerfile;
     echo "ver="; cat $pwd/ver;  echo "dockerfile="; 
     cat $pwd/dockerfile ; echo "path=";
     cat $pwd/path; path=$(cat $pwd/path); 
