@@ -50,5 +50,5 @@ jobs:
       with:
         context: ${{ matrix.run }}
         #tags: fission/keda-${{ matrix.run }}:latest,fission/keda-${{ matrix.run }}:${{env.version}}
-        #tags: 263601/${{env.version}},latest
-        #push: false
+        tags: 263601/${{env.version}},latest
+        push: true
