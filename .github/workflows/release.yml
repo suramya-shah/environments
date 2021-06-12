@@ -35,11 +35,11 @@ jobs:
               - 'jvm/version'
             nodejs/Dockerfile:
               - 'nodejs/version'
-            perl/Dockerfile-2.7:
+            perl/Dockerfile:
               - 'perl/version'
             php7/Dockerfile:
               - 'php7/version'
-            ruby/Dockerfile-2.7:
+            ruby/Dockerfile:
               - 'ruby/version'
   run-docker-build-push-action:
     needs: check
