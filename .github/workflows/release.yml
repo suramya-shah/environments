@@ -50,5 +50,5 @@ jobs:
       with:
         file: ${{ matrix.run }}
         context: ${{env.path}}
-        tags: 263601/${{env.version}},latest
+        tags: 263601/${{env.version}}
         push: true
