@@ -1,5 +1,7 @@
 FROM microsoft/dotnet:1.1-sdk AS builder
 
+ENV VERSION 1.11.0
+
 COPY * /proj/
 RUN cd /proj && ./project-build.sh
 

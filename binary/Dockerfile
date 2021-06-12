@@ -1,5 +1,7 @@
 FROM golang:1.15-alpine
 
+ENV VERSION 1.11.2
+
 WORKDIR /go
 COPY *.go /go/
 
