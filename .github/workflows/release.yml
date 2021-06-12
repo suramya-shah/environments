@@ -17,15 +17,15 @@ jobs:
         id: filter
         with:
           filters: |
-            binary-env:
+            binary/Dockerfile:
               - 'binary/version'
-            binary-builder:
+            binary/builder/Dockerfile:
               - 'binary/builder/version'
-            dotnet-env:
+            dotnet/Dockerfile:
               - 'dotnet/version'
-            python-env:
+            python/Dockerfile:
               - 'python/version'
-            python-env-2.7:
+            python/Dockerfile-2.7:
               - 'python/version-2.7'  
   run-docker-build-push-action:
     needs: check
@@ -37,7 +37,7 @@ jobs:
     - name: Checkout sources
       uses: actions/checkout@v2
     - name: get version
-      run: cd ${{ matrix.run }}; version=$(cat version);echo "version=$version" >> $GITHUB_ENV
+      run:  echo ${{ matrix.run }}>>folder; cat folder | cut -d '/'-f1>>path ; cat folder | cut -d '/'-f2>>dockerfile;cd $path; version=$(cat version);echo "version=$version" >> $GITHUB_ENV 
     - name: Login to DockerHub
       uses: docker/login-action@v1
       with:
@@ -48,5 +48,5 @@ jobs:
       with:
         context: ${{ matrix.run }}
         #tags: fission/keda-${{ matrix.run }}:latest,fission/keda-${{ matrix.run }}:${{env.version}}
-        #tags: 263601/keda-${{ matrix.run }}:latest,fission/keda-${{ matrix.run }}:${{env.version}}
+        #tags: 263601/${{env.version}},latest
         #push: false
