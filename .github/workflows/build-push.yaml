@@ -8,6 +8,8 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.filter.outputs.changes }}
     steps:
     - name: Checkout sources
       uses: actions/checkout@v2
@@ -18,25 +20,15 @@ jobs:
     - uses: dorny/paths-filter@v2
       id: filter
       with:
-        filters: .github/filters.yaml
-      strategy:
-        matrix:
-        run: ${{ fromJSON(steps.filter.outputs.changes) }}            
+        filters: .github/filters.yaml   
+           
+  run-docker-build-push-action:
+    needs: check
+    strategy:
+      matrix:
+       run: ${{ fromJSON(needs.check.outputs.packages) }}                 
     - name: get version
       run:  | # cd .github/workflows ; ./release-script.sh         
            pwd=`pwd`;echo ${{ matrix.run }}>>$pwd/folder; s=$(cat $pwd/folder); echo "${s%/*}">>$pwd/path ; cat $pwd/folder | cut -d '-' -f2>>$pwd/ver ; echo "${s##*/}">>$pwd/dockerfile; echo "ver="; cat $pwd/ver;  echo "dockerfile="; cat $pwd/dockerfile ; echo "path="; cat $pwd/path; path=$(cat $pwd/path); if [[ $(cat $pwd/dockerfile) == 'Dockerfile' ]]; then version=$(cat $path/version); else ver=-$(cat $pwd/ver) && version=$(cat $path/version$ver); fi; echo "version=$version" >> $GITHUB_ENV ; echo "path=$path" >> $GITHUB_ENV ; cat $path/version | cut -d ':' -f1>>$pwd/dockerRepo; dockerRepo=$(cat $pwd/dockerRepo); echo "dockerRepo=$dockerRepo" >> $GITHUB_ENV ; rm $pwd/ver; rm $pwd/folder; rm $pwd/path; rm $pwd/dockerfile;
            cd $path
            make $path-env-img TAG=$version
-
-#   - name: Login to DockerHub
- #     uses: docker/login-action@v1
- #     with:
- #       username: ${{ secrets.DOCKERHUB_USERNAME }}
- #       password: ${{ secrets.DOCKERHUB_TOKEN }}
- #   - name: Build and Push the docker image
- #     uses: docker/build-push-action@v2
- #     with:
- #       file: ${{ matrix.run }}
- #       context: ${{env.path}}
- #       tags: 263601/${{env.version}},263601/${{env.dockerRepo}}:latest
- #       push: true
