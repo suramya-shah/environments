@@ -49,6 +49,36 @@ jobs:
       if: steps.filter.outputs.go == 'true'
       run: kind load docker-image go-env && ./test_utils/run_test.sh ./go/tests/test_go_env.sh
 
+
+
+  jvm:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v2    
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: .github/filters.yaml
+    - name: Helm
+      if: steps.filter.outputs.any == 'true'
+      uses: Azure/setup-helm@v1    
+    - name: Kind Clutser
+      if: steps.filter.outputs.any == 'true'
+      uses: engineerd/setup-kind@v0.5.0
+      with:
+        config: kind.yaml      
+    - name: Configuring and testing the Installation
+      if: steps.filter.outputs.any == 'true'
+      run: |
+        kubectl cluster-info --context kind-kind
+        kind get kubeconfig --internal >$HOME/.kube/config
+        kubectl get nodes
+    - name: Install Fission CLI
+      if: steps.filter.outputs.any == 'true'
+      run: |
+        curl -Lo fission https://github.com/fission/fission/releases/download/1.12.0/fission-cli-linux \
+        && chmod +x fission && sudo mv fission /usr/local/bin/
     - name: jvm
       if: steps.filter.outputs.jvm == 'true'
       uses: hiberbee/github-action-skaffold@1.5.0
@@ -62,6 +92,35 @@ jobs:
       run: |
         kind load docker-image jvm-env && ./test_utils/run_test.sh jvm/tests/test_java_env.sh
 
+
+  nodejs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v2    
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: .github/filters.yaml
+    - name: Helm
+      if: steps.filter.outputs.any == 'true'
+      uses: Azure/setup-helm@v1    
+    - name: Kind Clutser
+      if: steps.filter.outputs.any == 'true'
+      uses: engineerd/setup-kind@v0.5.0
+      with:
+        config: kind.yaml      
+    - name: Configuring and testing the Installation
+      if: steps.filter.outputs.any == 'true'
+      run: |
+        kubectl cluster-info --context kind-kind
+        kind get kubeconfig --internal >$HOME/.kube/config
+        kubectl get nodes
+    - name: Install Fission CLI
+      if: steps.filter.outputs.any == 'true'
+      run: |
+        curl -Lo fission https://github.com/fission/fission/releases/download/1.12.0/fission-cli-linux \
+        && chmod +x fission && sudo mv fission /usr/local/bin/
     - name: nodejs
       if: steps.filter.outputs.nodejs == 'true'
       uses: hiberbee/github-action-skaffold@1.5.0
@@ -69,12 +128,70 @@ jobs:
         command: run
         profile: nodejs
 
+
+  perl:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v2    
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: .github/filters.yaml
+    - name: Helm
+      if: steps.filter.outputs.any == 'true'
+      uses: Azure/setup-helm@v1    
+    - name: Kind Clutser
+      if: steps.filter.outputs.any == 'true'
+      uses: engineerd/setup-kind@v0.5.0
+      with:
+        config: kind.yaml      
+    - name: Configuring and testing the Installation
+      if: steps.filter.outputs.any == 'true'
+      run: |
+        kubectl cluster-info --context kind-kind
+        kind get kubeconfig --internal >$HOME/.kube/config
+        kubectl get nodes
+    - name: Install Fission CLI
+      if: steps.filter.outputs.any == 'true'
+      run: |
+        curl -Lo fission https://github.com/fission/fission/releases/download/1.12.0/fission-cli-linux \
+        && chmod +x fission && sudo mv fission /usr/local/bin/
     - name:  perl
       if: steps.filter.outputs.perl == 'true'
       uses: hiberbee/github-action-skaffold@1.5.0
       with:
         command: run
         profile: perl
+
+  php7:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v2    
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: .github/filters.yaml
+    - name: Helm
+      if: steps.filter.outputs.any == 'true'
+      uses: Azure/setup-helm@v1    
+    - name: Kind Clutser
+      if: steps.filter.outputs.any == 'true'
+      uses: engineerd/setup-kind@v0.5.0
+      with:
+        config: kind.yaml      
+    - name: Configuring and testing the Installation
+      if: steps.filter.outputs.any == 'true'
+      run: |
+        kubectl cluster-info --context kind-kind
+        kind get kubeconfig --internal >$HOME/.kube/config
+        kubectl get nodes
+    - name: Install Fission CLI
+      if: steps.filter.outputs.any == 'true'
+      run: |
+        curl -Lo fission https://github.com/fission/fission/releases/download/1.12.0/fission-cli-linux \
+        && chmod +x fission && sudo mv fission /usr/local/bin/
 
     - name:  php7
       if: steps.filter.outputs.php7 == 'true'
@@ -83,6 +200,35 @@ jobs:
         command: run
         profile: php7
 
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v2    
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: .github/filters.yaml
+    - name: Helm
+      if: steps.filter.outputs.any == 'true'
+      uses: Azure/setup-helm@v1    
+    - name: Kind Clutser
+      if: steps.filter.outputs.any == 'true'
+      uses: engineerd/setup-kind@v0.5.0
+      with:
+        config: kind.yaml      
+    - name: Configuring and testing the Installation
+      if: steps.filter.outputs.any == 'true'
+      run: |
+        kubectl cluster-info --context kind-kind
+        kind get kubeconfig --internal >$HOME/.kube/config
+        kubectl get nodes
+    - name: Install Fission CLI
+      if: steps.filter.outputs.any == 'true'
+      run: |
+        curl -Lo fission https://github.com/fission/fission/releases/download/1.12.0/fission-cli-linux \
+        && chmod +x fission && sudo mv fission /usr/local/bin/
     - name:  python
       if: steps.filter.outputs.python == 'true'
       uses: hiberbee/github-action-skaffold@1.5.0
@@ -90,12 +236,69 @@ jobs:
         command: run
         profile: python
 
+  ruby:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v2    
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: .github/filters.yaml
+    - name: Helm
+      if: steps.filter.outputs.any == 'true'
+      uses: Azure/setup-helm@v1    
+    - name: Kind Clutser
+      if: steps.filter.outputs.any == 'true'
+      uses: engineerd/setup-kind@v0.5.0
+      with:
+        config: kind.yaml      
+    - name: Configuring and testing the Installation
+      if: steps.filter.outputs.any == 'true'
+      run: |
+        kubectl cluster-info --context kind-kind
+        kind get kubeconfig --internal >$HOME/.kube/config
+        kubectl get nodes
+    - name: Install Fission CLI
+      if: steps.filter.outputs.any == 'true'
+      run: |
+        curl -Lo fission https://github.com/fission/fission/releases/download/1.12.0/fission-cli-linux \
+        && chmod +x fission && sudo mv fission /usr/local/bin/
+
     - name:  ruby
       if: steps.filter.outputs.ruby == 'true'
       uses: hiberbee/github-action-skaffold@1.5.0
       with:
         command: run
         profile: ruby
+  tensorflow:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v2    
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: .github/filters.yaml
+    - name: Helm
+      if: steps.filter.outputs.any == 'true'
+      uses: Azure/setup-helm@v1    
+    - name: Kind Clutser
+      if: steps.filter.outputs.any == 'true'
+      uses: engineerd/setup-kind@v0.5.0
+      with:
+        config: kind.yaml      
+    - name: Configuring and testing the Installation
+      if: steps.filter.outputs.any == 'true'
+      run: |
+        kubectl cluster-info --context kind-kind
+        kind get kubeconfig --internal >$HOME/.kube/config
+        kubectl get nodes
+    - name: Install Fission CLI
+      if: steps.filter.outputs.any == 'true'
+      run: |
+        curl -Lo fission https://github.com/fission/fission/releases/download/1.12.0/fission-cli-linux \
+        && chmod +x fission && sudo mv fission /usr/local/bin/
 
     - name:  tensorflow-serving
       if: steps.filter.outputs.tensorflow-serving == 'true'
