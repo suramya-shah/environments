@@ -21,7 +21,7 @@ jobs:
               - 'binary/version'
             binary/builder/Dockerfile:
               - 'binary/builder/version'
-            dotnet20/Dockerfile:
+            dotnet/Dockerfile:
               - 'dotnet/version'
             python/Dockerfile:
               - 'python/version'
