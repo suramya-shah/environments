@@ -7,9 +7,7 @@ on:
       - '**/version**'
 jobs:
   check:
-    runs-on: ubuntu-latest
-    outputs:
-      packages: ${{ check.steps.filter.outputs.changes }}   
+    runs-on: ubuntu-latest  
     steps:
     - name: Checkout the current repo
       uses: actions/checkout@v2
