@@ -1,5 +1,5 @@
 
-name: Environments build and test 
+name: Environments build and test with make
 
 on: 
 #  pull_request:
