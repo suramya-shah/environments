@@ -28,9 +28,7 @@ jobs:
     if: contains(needs.check.outputs.packages, 'go') 
     steps:
     - name: Checkout sources
-      uses: actions/checkout@v2
-      with:
-        ref: feature/make   
+      uses: actions/checkout@v2 
     - name: Helm
       uses: Azure/setup-helm@v1    
     - name: Kind Clutser
