@@ -9,7 +9,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     outputs:
-      packages: ${{ steps.filter.outputs.changes }}
+      packages: ${{ steps.filter.outputs }}
     steps:
     - name: Checkout sources
       uses: actions/checkout@v2
@@ -20,7 +20,7 @@ jobs:
     - uses: dorny/paths-filter@v2
       id: filter
       with:
-        filters: .github/filters.yaml   
+        filters: .github/filters.yaml
 
   run-docker-build-push-action:
     needs: check
