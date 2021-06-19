@@ -42,6 +42,7 @@ jobs:
             filter=${{matrix.run}}
             path=$(echo "${{matrix.run}}" | cut -d '/' -f1)            
             cd $path
+            if $path="nodejs" ; then path=node
             if [[ "$filter" == *"builder"* ]]; then
                 cd builder
                 if [[ $(filter) == *"@"* ]]; then
