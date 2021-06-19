@@ -3,4 +3,4 @@
 .PHONY: all
 all: dotnet20-builder-img
 
-dotnet20-builder-img: Dockerfile
+dotnet20-builder-img: dockerfile
