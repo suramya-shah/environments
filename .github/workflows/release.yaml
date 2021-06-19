@@ -20,6 +20,7 @@ jobs:
   run-docker-build-push-action:
     needs: check
     strategy:
+      fail-fast: false
       matrix:
        run: ${{ fromJSON(needs.check.outputs.packages) }}
     runs-on: ubuntu-latest
