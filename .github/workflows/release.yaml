@@ -39,8 +39,8 @@ jobs:
       if: var=$(cat "steps.filter.outputs.${{ matrix.run }}")   
       run:  |            
             echo "$var"
-            echo "${{matrix.run}}" | cut -d '-' -f1>>$pwd
-            cd $pwd
+            echo "${{matrix.run}}" | cut -d '-' -f1>>path
+            cd $path
             if [ contains("${{matrix.run}}", 'builder') ]
             cd builder
             fi
