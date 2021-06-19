@@ -4,7 +4,7 @@ on:
     branches:
       - feature/make
     paths:
-      - '**/version**'
+      - '**/envconfig.json**'
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -20,7 +20,7 @@ jobs:
     - uses: dorny/paths-filter@v2
       id: filter
       with:
-        filters: .github/filters.yaml
+        filters: .github/filters/filters.yaml
 
   run-docker-build-push-action:
     needs: check
@@ -32,6 +32,7 @@ jobs:
     - name: get version
       run:  |             
            pwd=`pwd`;echo ${{ matrix.run }}>>$pwd/folder; s=$(cat $pwd/folder); echo "${s%/*}">>$pwd/path ; cat $pwd/folder | cut -d '-' -f2>>$pwd/ver ; echo "${s##*/}">>$pwd/dockerfile; echo "ver="; cat $pwd/ver;  echo "dockerfile="; cat $pwd/dockerfile ; echo "path="; cat $pwd/path; path=$(cat $pwd/path); if [[ $(cat $pwd/dockerfile) == 'Dockerfile' ]]; then version=$(cat $path/version); else ver=-$(cat $pwd/ver) && version=$(cat $path/version$ver); fi; echo "version=$version" >> $GITHUB_ENV ; echo "path=$path" >> $GITHUB_ENV ; cat $path/version | cut -d ':' -f1>>$pwd/dockerRepo; dockerRepo=$(cat $pwd/dockerRepo); echo "dockerRepo=$dockerRepo" >> $GITHUB_ENV ; rm $pwd/ver; rm $pwd/folder; rm $pwd/path; rm $pwd/dockerfile;
-           cd  ${{ matrix.run }}
-           make $path-env-img TAG=$version
            
+           cd  ${{ matrix.run }}
+          
+
