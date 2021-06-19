@@ -47,20 +47,22 @@ jobs:
                 if [[ $(filter) == *"@"* ]]; then
                   ver=$(echo $filter| cut -d '@' -f2 ) 
                   version=$(cat version-$ver);
+                  make $path-builder-$ver-img TAG=$version
                 else
-                   version=$(cat version);
-                                           
+                   version=$(cat version); 
+                   make $path-builder-img TAG=$version;                                         
                 fi
-                make $path-builder-img TAG=$version
+
             else
               if [[ $(filter) == *"@"* ]]; then
                   ver=$(echo $filter| cut -d '@' -f2 ) 
                   version=$(cat version-$ver);
+                  make $path-env-$ver-img TAG=$version
                 else
                    version=$(cat version);
-                                      
+                  make $path-env-img TAG=$version                    
                 fi
-                 make $path-builder-img TAG=$version       
+                        
             fi
 
             
