@@ -16,7 +16,7 @@ jobs:
       - uses: dorny/paths-filter@v2
         id: filter
         with:
-          filters: .github/workflows/filters/release_filters.yaml        
+          filters: .github/workflows/filters/version_filters.yaml        
   run-docker-build-push-action:
     needs: check
     strategy:
@@ -39,8 +39,35 @@ jobs:
       if: var=$(cat "steps.filter.outputs.${{ matrix.run }}")   
       run:  |                      
       
-        pwd=`pwd`;echo ${{ matrix.run }}>>$pwd/folder; s=$(cat $pwd/folder); echo "${s%/*}">>$pwd/path ; cat $pwd/folder | cut -d '-' -f2>>$pwd/ver ; echo "${s##*/}">>$pwd/dockerfile; echo "ver="; cat $pwd/ver;  echo "dockerfile="; cat $pwd/dockerfile ; echo "path="; cat $pwd/path; path=$(cat $pwd/path); if [[ $(cat $pwd/dockerfile) == 'Dockerfile' ]]; then version=$(cat $path/version); else ver=-$(cat $pwd/ver) && version=$(cat $path/version$ver); fi; echo "version=$version" >> $GITHUB_ENV ; echo "path=$path" >> $GITHUB_ENV ; cat $path/version | cut -d ':' -f1>>$pwd/dockerRepo; dockerRepo=$(cat $pwd/dockerRepo); echo "dockerRepo=$dockerRepo" >> $GITHUB_ENV ; rm $pwd/ver; rm $pwd/folder; rm $pwd/path; rm $pwd/dockerfile;
-        cd $path
-        make $path-env-img TAG=$version
+          echo "$var"
+            filter="${{matrix.run}}"
+            path=$(echo "${{matrix.run}}" | cut -d '/' -f1)            
+            cd $path
+            if [[ $path="nodejs" ]]; then path="node"; fi
+            if [[ "$filter" == *"builder"* ]]; then
+                cd builder
+                if [[ "$filter" == *"@"* ]]; then
+                  ver=$(echo "$filter"| cut -d '@' -f2 );
+                  version=$(cat version-$ver);
+                  make $path-builder-$ver-img TAG="$version";
+                else
+                   version=$(cat version); 
+                   make $path-builder-img TAG="$version";                                         
+                fi
+
+            else
+              if [[ "$filter" == *"@"* ]]; then
+                  ver=$(echo "$filter"| cut -d '@' -f2 );
+                  version=$(cat version-$ver);
+                  make $path-env-$ver-img TAG="$version"
+                else
+                   version=$(cat version);
+                  make $path-env-img TAG="$version" ;                   
+                fi                       
+            fi
+
+#pwd=`pwd`;echo ${{ matrix.run }}>>$pwd/folder; s=$(cat $pwd/folder); echo "${s%/*}">>$pwd/path ; cat $pwd/folder | cut -d '-' -f2>>$pwd/ver ; echo "${s##*/}">>$pwd/dockerfile; echo "ver="; cat $pwd/ver;  echo "dockerfile="; cat $pwd/dockerfile ; echo "path="; cat $pwd/path; path=$(cat $pwd/path); if [[ $(cat $pwd/dockerfile) == 'Dockerfile' ]]; then version=$(cat $path/version); else ver=-$(cat $pwd/ver) && version=$(cat $path/version$ver); fi; echo "version=$version" >> $GITHUB_ENV ; echo "path=$path" >> $GITHUB_ENV ; cat $path/version | cut -d ':' -f1>>$pwd/dockerRepo; dockerRepo=$(cat $pwd/dockerRepo); echo "dockerRepo=$dockerRepo" >> $GITHUB_ENV ; rm $pwd/ver; rm $pwd/folder; rm $pwd/path; rm $pwd/dockerfile;
+#cd $path
+#make $path-env-img TAG=$version
 
 
