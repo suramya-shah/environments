@@ -45,8 +45,8 @@ jobs:
             if [[ $path="nodejs" ]]; then path="node"; fi
             if [[ "$filter" == *"builder"* ]]; then
                 cd builder
-                if [[ $(filter) == *"@"* ]]; then
-                  ver=$(echo $filter| cut -d '@' -f2 ) 
+                if [[ "$(filter)" == *"@"* ]]; then
+                  ver=$(echo "$filter"| cut -d '@' -f2 ) 
                   version=$(cat version-$ver);
                   make $path-builder-$ver-img TAG=$version
                 else
@@ -55,8 +55,8 @@ jobs:
                 fi
 
             else
-              if [[ $(filter) == *"@"* ]]; then
-                  ver=$(echo $filter| cut -d '@' -f2 ) 
+              if [[ "$(filter)" == *"@"* ]]; then
+                  ver=$(echo "$filter"| cut -d '@' -f2 ) 
                   version=$(cat version-$ver);
                   make $path-env-$ver-img TAG=$version
                 else
