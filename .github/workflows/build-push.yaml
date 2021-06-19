@@ -2,7 +2,7 @@ name: Release- build push
 on:
   push:
     branches:
-      - feature/make
+      - master
     paths:
       - '**/version**'
 jobs:
