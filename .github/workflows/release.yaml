@@ -37,9 +37,13 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}            
     - name: get version
       if: var=$(cat "steps.filter.outputs.${{ matrix.run }}")   
-      run:  | 
-            
+      run:  |            
             echo "$var"
+            echo "${{matrix.run}}" | cut -d '-' -f1>>$pwd
+            cd $pwd
+            if [ contains("${{matrix.run}}", 'builder') ]
+            cd builder
+            fi
             make ${{ matrix.run }} TAG=test
 # make $path-env-img TAG=$version
 
