@@ -41,7 +41,7 @@ jobs:
             echo "$var"
             path=$(echo "${{matrix.run}}" | cut -d '-' -f1)
             cd $path
-            if [ contains("${{matrix.run}}", 'builder') ]
+            if [[ ${{matrix.run}} == *"builder"* ]]; then
             cd builder
             fi
             make ${{ matrix.run }} TAG=test
