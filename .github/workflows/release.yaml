@@ -39,7 +39,7 @@ jobs:
       if: var=$(cat "steps.filter.outputs.${{ matrix.run }}")   
       run:  |            
             echo "$var"
-            filter=${{matrix.run}}
+            filter="${{matrix.run}}"
             path=$(echo "${{matrix.run}}" | cut -d '/' -f1)            
             cd $path
             if [[ $path="nodejs" ]]; then path="node"; fi
@@ -62,8 +62,7 @@ jobs:
                 else
                    version=$(cat version);
                   make $path-env-img TAG=$version                    
-                fi
-                        
+                fi                       
             fi
 
             
