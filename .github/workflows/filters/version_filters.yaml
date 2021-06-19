@@ -1,56 +1,57 @@
-binary-env-img:
+# '@' must be added before a version number on filter,
+binary/:
   - 'binary/version'
-binary-builder-img:
+binary/builder/:
   - 'binary/builder/version'
-dotnet-env-img:
+dotnet/:
   - 'dotnet/version'
-dotnet20-env-img:
+dotnet20/:
   - 'dotnet20/version'
-dotnet20-builder-img:
+dotnet20/builder/:
   - 'dotnet20/builder/version'     
-python-env-img:
+python/:
   - 'python/version'
-python-env-2.7-img:
+python/@2.7:
   - 'python/version-2.7'              
-go-env-img:
+go/:
   - 'go/version'
-go-env-1.12-img:
+go/@1.12:
   - 'go/version-1.12'
-go-env-1.13-img:
+go/@1.13:
   - 'go/version-1.13'  
-go-env-1.14-img:
+go/@1.14:
   - 'go/version-1.14'
-go-builder-img:
+go/builder/:
   - 'go/builder/version'
-go-builder-1.11.4-img:
+go/builder@1.11.4:
   - 'go/builder/version-1.11.4'  
-go-builder-1.12-img:
+go/builder@1.12:
   - 'go/builder/version-1.12'
-go-builder-1.13-img:
+go/builder@1.13:
   - 'go/builder/version-1.13'   
-go-builder-1.14-img:
+go/builder@1.14:
   - 'go/builder/version-1.14'    
-jvm-env-img:
+jvm/:
   - 'jvm/version'
-jvm-builder-img:
+jvm/builder/:
   - 'jvm/builder/version'
-jvm-jersey-env-img:
+jvm-jersey/:
   - 'jvm-jersey/version'
-jvm-jersey-env-11-img:
+jvm-jersey@11:
   - 'jvm-jersey/version-11'
-jvm-jersey-builder-img:
+jvm-jersey/builder:
   - 'jvm-jersey/version'
-jvm-jersey-builder-11-img:
+jvm-jersey/builder@11:
   - 'jvm-jersey/version-11'  
-nodejs-env-img:
+nodejs/:
   - 'nodejs/version'
-nodejs-env-12.16-img:
+nodejs@12.16:
   - 'nodejs/version-12.16'
-perl-env-img:
+perl/:
   - 'perl/version'
-php7-env-img:
+php7/:
   - 'php7/version'
-ruby-env-img:
+ruby/:
   - 'ruby/version'
-tensorflow-serving-env-img:
+tensorflow-serving/:
   - 'tensorflow-serving/version'  
