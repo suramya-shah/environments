@@ -13,6 +13,7 @@ jobs:
     steps:
       - name: Checkout the current repo
         uses: actions/checkout@v2
+        ref: feature/Release
       - uses: dorny/paths-filter@v2
         id: filter
         with:
