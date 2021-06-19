@@ -20,7 +20,7 @@ jobs:
     - uses: dorny/paths-filter@v2
       id: filter
       with:
-        filters: .github/filters/build-push-filter.yaml
+        filters: .github/filters.yaml
 
   run-docker-build-push-action:
     needs: check
