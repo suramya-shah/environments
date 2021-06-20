@@ -10,7 +10,6 @@ COPY src /usr/src/myapp/src/
 RUN mvn package
 
 FROM openjdk:8-jre-alpine
-VOLUME /tmp
 COPY --from=BUILD /usr/src/myapp/target/env-jvm-jersey-0.0.1.jar /app.jar
-ENTRYPOINT java ${JVM_OPTS} -Djava.security.egd=file:/dev/./urandom -jar app.jar 8888
+ENTRYPOINT java ${JVM_OPTS} -Djava.security.egd=file:/dev/./urandom -jar app.jar --server.port=8888
 EXPOSE 8888
