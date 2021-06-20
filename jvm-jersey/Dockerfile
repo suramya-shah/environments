@@ -7,7 +7,7 @@ COPY pom.xml .
 RUN mvn dependency:go-offline
 
 COPY src /usr/src/myapp/src/
-RUN mvn clean package
+RUN mvn package
 
 FROM openjdk:8-jre-alpine
 COPY --from=BUILD /usr/src/myapp/target/env-jvm-jersey-0.0.1.jar /app.jar
