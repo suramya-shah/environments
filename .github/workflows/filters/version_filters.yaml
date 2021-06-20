@@ -12,7 +12,9 @@ dotnet20/builder/:
 python/:
   - 'python/version'
 python/@2.7:
-  - 'python/version-2.7'              
+  - 'python/version-2.7'
+python/@buster:
+  - 'python/version-buster'                
 go/:
   - 'go/version'
 go/@1.12:
