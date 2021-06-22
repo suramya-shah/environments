@@ -31,7 +31,6 @@ jobs:
     - name: Configuring and testing the Installation
       run: |
         kubectl cluster-info --context kind-kind
-        kind get kubeconfig --internal >$HOME/.kube/config
         kubectl get nodes
     - name: Install Fission CLI
       run: |
